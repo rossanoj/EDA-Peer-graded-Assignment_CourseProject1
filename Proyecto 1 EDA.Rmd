@@ -1,0 +1,40 @@
+---
+title: "Proyecto 1 EDA"
+author: "Juan Rossano"
+date: "2026-02-14"
+output: pdf_document
+---
+
+## EDA-Peer-graded-Assignment_CourseProject1
+### Peer-graded Assignment: Course Project 1 
+####  Johns Hopkins University / Exploratory Data Analysis
+#### (Coursera)
+
+Preparacion del entorno de trabajo.
+
+```{r setup, include=FALSE}
+# Cargar libreria
+library(sqldf)
+```
+
+Obtencion de los datos
+
+```{r carga-datos, include=FALSE}
+# Leer archivo filtrando directamente las fechas 2007-02-01 y 2007-02-02
+datos_filtrados <- read.csv.sql("data/household_power_consumption.txt",
+                                sql = "SELECT * FROM file WHERE Date IN ('1/2/2007', '2/2/2007')",
+                                sep = ";", 
+                                header = TRUE)
+
+```
+
+Convertir la columna fecha
+
+
+```{r conversion-fecha, include=FALSE}
+# Convertir la columna Date a formato Date
+datos_filtrados$Date <- as.Date(datos_filtrados$Date, format = "%d/%m/%Y")
+```
+
+
+
