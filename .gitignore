@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Archivos de datos grandes (descargar desde UCI Machine Learning Repository)
+data/household_power_consumption.txt
+data/exdata_data_household_power_consumption.zip
