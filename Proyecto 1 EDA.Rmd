@@ -19,13 +19,49 @@ library(sqldf)
 
 Obtencion de los datos
 
-```{r carga-datos, include=FALSE}
-# Leer archivo filtrando directamente las fechas 2007-02-01 y 2007-02-02
-datos_filtrados <- read.csv.sql("data/household_power_consumption.txt",
+Existen tres opciones para cargar los datos:
+
+**Opción 1:** Leer archivo local ya filtrado (recomendado)
+```{r carga-local, include=FALSE, eval=TRUE}
+# Leer archivo filtrado local (ya contiene solo las fechas 2007-02-01 y 2007-02-02)
+datos_filtrados <- read.csv("data/household_power_consumption_filter.txt",
+                            sep = ";", 
+                            header = TRUE,
+                            stringsAsFactors = FALSE)
+```
+
+**Opción 2:** Descargar desde el curso de Coursera y filtrar
+```{r carga-coursera, include=FALSE, eval=FALSE}
+# Descargar desde el enlace del curso
+url_coursera <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+temp <- tempfile()
+download.file(url_coursera, temp)
+unzip(temp, exdir = "data/temp")
+
+# Leer y filtrar las fechas requeridas
+datos_filtrados <- read.csv.sql("data/temp/household_power_consumption.txt",
                                 sql = "SELECT * FROM file WHERE Date IN ('1/2/2007', '2/2/2007')",
                                 sep = ";", 
                                 header = TRUE)
+unlink(temp)
+unlink("data/temp", recursive = TRUE)
+```
 
+**Opción 3:** Descargar desde UCI Machine Learning Repository y filtrar
+```{r carga-uci, include=FALSE, eval=FALSE}
+# Descargar desde UCI ML Repository
+url_uci <- "https://archive.ics.uci.edu/static/public/235/individual+household+electric+power+consumption.zip"
+temp <- tempfile()
+download.file(url_uci, temp)
+unzip(temp, exdir = "data/temp")
+
+# Leer y filtrar las fechas requeridas
+datos_filtrados <- read.csv.sql("data/temp/household_power_consumption.txt",
+                                sql = "SELECT * FROM file WHERE Date IN ('1/2/2007', '2/2/2007')",
+                                sep = ";", 
+                                header = TRUE)
+unlink(temp)
+unlink("data/temp", recursive = TRUE)
 ```
 
 Convertir la columna fecha
